@@ -1,6 +1,8 @@
 # SFScrollView
 SFScrollView is made to keep all subviews visible and let them go out of scrollview bounds.
 
+
+
 #Customization
 You can adjust scrolling orienation and cell size:
 
@@ -30,3 +32,6 @@ Simply drag SFScrollView.swift file in your project and add following lines to y
         sfScrollView.setUp(SFCellSizeStyle.fixed, orien: SFOrienation.horizontal, cellContentArray: miniArray.mutableCopy() as! NSArray)
         addSubview(sfScrollView1)
 
+#What it does looks like:
+
+![alt tag](https://github.com/nealCeffrey/SFScrollView/blob/master/SFScrollView.gif)
