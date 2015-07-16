@@ -4,7 +4,7 @@ SFScrollView is made to keep all subviews visible and not let them go out of scr
 
 
 #Customization
-You can adjust scrolling orienation and cell size:
+You can adjust scrolling orientation and cell size:
 
     Horizontal & Fixed Cell size
     Vertical & Fixed Cell size
@@ -17,7 +17,7 @@ It's made in Swift 2
 It's tested on iOS 9 beta 3
 
 #Installation
-Simply drag SFScrollView.swift file in your project and add following lines to your code:
+Simply drag SFScrollView.swift file in to your project and add following lines to your code:
 
         let miniCellCount = 30
         let miniArray = NSMutableArray()
@@ -30,7 +30,7 @@ Simply drag SFScrollView.swift file in your project and add following lines to y
         sfScrollView.fixedCellSize = CGSize(width: 150, height: 80)
         sfScrollView.offsetGap = 10
         sfScrollView.setUp(SFCellSizeStyle.fixed, orien: SFOrienation.horizontal, cellContentArray: miniArray.mutableCopy() as! NSArray)
-        addSubview(sfScrollView1)
+        addSubview(sfScrollView)
 
 #What it does looks like:
 
