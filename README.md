@@ -1,5 +1,5 @@
 # SFScrollView
-SFScrollView is made to keep all subviews visible and let them go out of scrollview bounds.
+SFScrollView is made to keep all subviews visible and not let them go out of scrollview bounds.
 
 
 
