@@ -22,7 +22,7 @@ enum SFCellSizeStyle{
    
 }
 
-let cellColor = UIColor.blueColor()
+let cellColor = UIColor.orangeColor()
 let cellBorderColor = UIColor.whiteColor()
 
 
@@ -32,7 +32,6 @@ class SFScrollView : UIView, UIScrollViewDelegate {
     
     //Array of Cells
     var cells = NSMutableArray()
-    
     
     @IBInspectable var offsetGap : CGFloat? = 5.0
     
@@ -160,23 +159,29 @@ class SFScrollView : UIView, UIScrollViewDelegate {
             let point = scrollView.convertPoint(cell.center, toView: self)
             let offset = CGFloat(cells.indexOfObject(cell)) * offsetGap!
             let reversedOffset = CGFloat((cells.count - 1) - cells.indexOfObject(cell)) * offsetGap!
-            if (orienation == SFOrienation.horizontal ? point.x : point.y) < (orienation == SFOrienation.horizontal ? (cell.frame.width * 0.5) + offset : (cell.frame.height * 0.5) + offset){
+            let y = (orienation == SFOrienation.horizontal ? point.x : point.y)
+            let half = cell.frame.width * 0.5
+            if y < (orienation == SFOrienation.horizontal ? (cell.frame.width * 0.5) + offset : (cell.frame.height * 0.5) + offset){
                 // if cell is touched to the left side or top (depends on orientaion)
                 let translationX = ((cell.frame.width * 0.5) - point.x) + offset
                 let translationY = ((cell.frame.height * 0.5) - point.y) + offset
-                
+               
                 (orienation == SFOrienation.horizontal) ? (cell.transform = CGAffineTransformMakeTranslation(translationX, 0)) : (cell.transform = CGAffineTransformMakeTranslation(0, translationY))
+                
+                
+                
                 scrollView.bringSubviewToFront(cell)
         
                 
                 
-            }else if (orienation == SFOrienation.horizontal ? point.x : point.y) > (orienation == SFOrienation.horizontal ? scrollView.frame.width - ((cell.frame.width * 0.5) + reversedOffset) : scrollView.frame.height - ((cell.frame.height * 0.5) + reversedOffset)){
+            }else if y > (orienation == SFOrienation.horizontal ? scrollView.frame.width - (half + reversedOffset) : scrollView.frame.height - (half + reversedOffset)){
                 // if cell is touched to the rigth side or buttom (depends on orientaion)
                 
                 let translationX = (point.x - (scrollView.frame.width - (cell.frame.width * 0.5)) + reversedOffset)
                 let translationY = (point.y - (scrollView.frame.height - (cell.frame.height * 0.5)) + reversedOffset)
                 
                 (orienation == SFOrienation.horizontal) ? (cell.transform = CGAffineTransformMakeTranslation(-translationX, 0)) : (cell.transform = CGAffineTransformMakeTranslation(0, -translationY))
+                
                 scrollView.sendSubviewToBack(cell)
             }else{
                 //if cell is in the middle
@@ -187,16 +192,25 @@ class SFScrollView : UIView, UIScrollViewDelegate {
             
             
         }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // Some extensions
 
 public func randomInRange (lower: Int , upper: Int) -> Int {
     return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
+}
+public func randomString(len : Int) -> NSString {
+    let s : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    let mut : NSMutableString = NSMutableString(capacity: len)
+    for var inde = 0; inde < len; ++inde {
+        mut.appendFormat("%C", s.characterAtIndex(Int(arc4random_uniform(UInt32(s.length)))))
+    }
+    return mut.mutableCopy() as! NSString
 }
 
 public let sfMaskBoth : UIViewAutoresizing = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]

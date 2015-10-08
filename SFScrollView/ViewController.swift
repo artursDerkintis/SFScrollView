@@ -24,15 +24,15 @@ class ViewController: UIViewController {
             
             
             //Vertical & Fixed
-            let sfScrollView1 = SFScrollView(frame: CGRect(x: 0, y: 20, width: 150, height: view.bounds.height - 20))
+            let sfScrollView1 = SFScrollView(frame: CGRect(x: 0, y: 20, width: view.bounds.width, height: view.bounds.height - 20))
             ///All adjustments do before call setUp()
-            sfScrollView1.fixedCellSize = CGSize(width: 150, height: 80)
+            sfScrollView1.fixedCellSize = CGSize(width: view.bounds.width, height: 150)
             sfScrollView1.setUp(SFCellSizeStyle.fixed, orien: SFOrienation.vertical, cellContentArray: miniArray.mutableCopy() as! NSArray)
             sfScrollView1.autoresizingMask = UIViewAutoresizing.FlexibleHeight
             view.addSubview(sfScrollView1)
             
             
-            //Vertical & Cell tells size
+           //Vertical & Cell tells size
             let sfScrollView2 = SFScrollView(frame: CGRect(x: view.bounds.width - 100, y: 20, width: 100, height: view.bounds.height - 20))
             ///All adjustments do before call setUp()
             sfScrollView2.offsetGap = 2
