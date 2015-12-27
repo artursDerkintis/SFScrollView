@@ -31,7 +31,7 @@ let cellBorderColor = UIColor.whiteColor()
 class SFScrollView : UIView, UIScrollViewDelegate {
     
     //Array of Cells
-    var cells = NSMutableArray()
+    var cells = [SFCell]()
     
     @IBInspectable var offsetGap : CGFloat? = 5.0
     
@@ -74,7 +74,7 @@ class SFScrollView : UIView, UIScrollViewDelegate {
             if cellSizeStyle == SFCellSizeStyle.fixed && orienation == SFOrienation.horizontal{
                 ///Horizontal && Fixed Size
                 if cells.count != 0{
-                    origin = CGPoint(x: CGRectGetMaxX((cells.lastObject as! SFCell).frame), y: 0)
+                    origin = CGPoint(x: CGRectGetMaxX(cells.last!.frame), y: 0)
                 }else{
                     origin = CGPoint(x: 0, y: 0)
                 }
@@ -86,7 +86,7 @@ class SFScrollView : UIView, UIScrollViewDelegate {
             }else if cellSizeStyle == SFCellSizeStyle.fixed && orienation == SFOrienation.vertical{
                 ///Vertical && Fixed Size
                 if cells.count != 0{
-                    origin = CGPoint(x: 0, y: CGRectGetMaxY((cells.lastObject as! SFCell).frame))
+                    origin = CGPoint(x: 0, y: CGRectGetMaxY(cells.last!.frame))
                 }else{
                     origin = CGPoint(x: 0, y: 0)
                 }
@@ -96,7 +96,7 @@ class SFScrollView : UIView, UIScrollViewDelegate {
                 ///Horizontal && Change next lines to desired size
                 newCell.setUpSize(true)
                 if cells.count != 0{
-                    origin = CGPoint(x: CGRectGetMaxX((cells.lastObject as! SFCell).frame), y: 0)
+                    origin = CGPoint(x: CGRectGetMaxX(cells.last!.frame), y: 0)
                 }else{
                     origin = CGPoint(x: 0, y: 0)
                 }
@@ -107,7 +107,7 @@ class SFScrollView : UIView, UIScrollViewDelegate {
                 ///Vertical && Change next lines to desired size
                 newCell.setUpSize(false)
                 if cells.count != 0{
-                    origin = CGPoint(x: 0, y: CGRectGetMaxY((cells.lastObject as! SFCell).frame))
+                    origin = CGPoint(x: 0, y: CGRectGetMaxY(cells.last!.frame))
                 }else{
                     origin = CGPoint(x: 0, y: 0)
                 }
@@ -117,7 +117,7 @@ class SFScrollView : UIView, UIScrollViewDelegate {
             }
             newCell.frame = CGRect(origin: origin!, size: size!)
             newCell.label!.text = text
-            cells.addObject(newCell)
+            cells.append(newCell)
             scrollView!.addSubview(newCell)
             
             
@@ -151,14 +151,14 @@ class SFScrollView : UIView, UIScrollViewDelegate {
     }
     
     func repositionEachCell(scrollView : UIScrollView){
-        for var cell : SFCell in cells.mutableCopy() as! [SFCell]{
+        for cell in cells{
             
             //next the magic happens, well, not really magic, but this is main thing!
             
             
             let point = scrollView.convertPoint(cell.center, toView: self)
-            let offset = CGFloat(cells.indexOfObject(cell)) * offsetGap!
-            let reversedOffset = CGFloat((cells.count - 1) - cells.indexOfObject(cell)) * offsetGap!
+            let offset = CGFloat(cells.indexOf(cell)!) * offsetGap!
+            let reversedOffset = CGFloat((cells.count - 1) - cells.indexOf(cell)!) * offsetGap!
             let y = (orienation == SFOrienation.horizontal ? point.x : point.y)
             let half = cell.frame.width * 0.5
             if y < (orienation == SFOrienation.horizontal ? (cell.frame.width * 0.5) + offset : (cell.frame.height * 0.5) + offset){
